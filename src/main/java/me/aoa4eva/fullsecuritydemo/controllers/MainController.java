@@ -1,7 +1,9 @@
 package me.aoa4eva.fullsecuritydemo.controllers;
 
 import me.aoa4eva.fullsecuritydemo.models.Role;
+import me.aoa4eva.fullsecuritydemo.models.Userz;
 import me.aoa4eva.fullsecuritydemo.repositories.RoleRepository;
+import me.aoa4eva.fullsecuritydemo.repositories.UserzRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,8 @@ import java.security.Principal;
 public class MainController {
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    UserzRepository userzRepository;
 
     @RequestMapping("/")
     public String index(){
@@ -20,14 +24,16 @@ public class MainController {
     }
 
     @RequestMapping("/login")
-    public String login(Principal p)
+    public String login()
     {
         return "login";
     }
 
     @RequestMapping("/testRoles")
-    public @ResponseBody String showRoles()
+    public @ResponseBody String showRoles(Principal p)
     {
+        p.getName();
+
         Iterable <Role> r = roleRepository.findAll();
         String x="<h2>ROLE DETAILS</h2>";
         for(Role item:r)
@@ -39,5 +45,18 @@ public class MainController {
         x+=findR.getRole()+" was found with an ID of "+findR.getId();
         return x;
 
+    }
+
+    @RequestMapping("/adduser")
+    public @ResponseBody String addUser()
+    {
+        Userz u = new Userz();
+        u.setEmail("someone@somewhere.com");
+        u.setUsername("newuser");
+        u.setEnabled(true);
+        u.setPassword("password");
+        u.addRole(roleRepository.findByRole("USER"));
+        userzRepository.save(u);
+        return "User added";
     }
 }

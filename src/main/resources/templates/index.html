@@ -11,14 +11,14 @@
     <div sec:authorize="isAuthenticated()">
         This content is only shown to authenticated users.
     </div>
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
+    <div sec:authorize="hasAuthority('ADMIN')">
         This content is only shown to administrators.
     </div>
-    <div sec:authorize="hasRole('ROLE_USER')">
+    <div sec:authorize="hasAuthority('USER')">
         This content is only shown to users.
     </div>
 
-    Logged user: <span sec:authentication="name">Bob</span>
-    Roles: <span sec:authentication="principal.authorities">Principal Authorities not set</span>
+    Logged user: <span sec:authentication="name">The user is not logged in yet</span>
+    <!--Roles: <span sec:authentication="principal.authorities">Principal Authorities not set</span>-->
 </body>
 </html>

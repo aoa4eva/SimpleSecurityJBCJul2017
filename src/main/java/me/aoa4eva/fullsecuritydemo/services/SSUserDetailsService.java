@@ -44,7 +44,6 @@ public class SSUserDetailsService implements UserDetailsService{
 
     }
 
-
     private Set<GrantedAuthority> getAuthorities(Userz u)
     {
         Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
